@@ -5,7 +5,7 @@ var fs = require("fs");
 var request = require("request");
 var Twitter = require('Twitter');
 var Spotify = require('node-spotify-api');
-// Variable that creates a new line
+// Constant variable that creates a new line
 const newLine = "\r\n";
 
 // Argument action and value
@@ -19,20 +19,20 @@ case "my-tweets":
   break;
 // spotify-this-song
 case "spotify-this-song":
-  getSong();
+  getSongs();
   break;
 // movie-this
 case "movie-this":
-  getMovie();
+  getMovies();
   break;
 // do-what-it-says
 case "do-what-it-says":
   doWhatItSays();
   break;
 // Prints a default massage if there isn't user command
-  default:
+default:
   console.log("Please enter a command: my-tweets, spotify-this-song, movie-this, do-what-it-says");
-break;
+  break;
 }
 // ================= End of Switch case ===================
 
@@ -41,7 +41,7 @@ break;
 function getTweets(){
     var client = new Twitter(keys.twitter);
 
-    var params = {q: 'krispykrisp', count: 20};
+    var params = {q: 'krispykrisp', count: 20}
 
     client.get('statuses/user_timeline', params, searchedData);
    
@@ -58,10 +58,11 @@ function getTweets(){
                 + newLine + "========================================");      
             }
         }
+        }
     }
 // -----------------------------------
 // This function grabs songs from spotify
-function getSong(){
+function getSongs(){
     var spotify = new Spotify(keys.spotify);
 
         function song(song){
@@ -89,15 +90,17 @@ function getSong(){
 }
 // -----------------------------------
 // This function grabs movies from OMDB
-function getMovie(){
+function getMovies(){
         // command line request
         var movieName = process.argv[3];
         // getting movie from OMDB API
         var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+
         request(queryUrl, function(error, response, body) {
            if(!movieName){
             console.log("Mr. nobody!");
            } else{
+
         var jsonData = JSON.parse(body);
         // Movie funciton
         var movies = function(){
@@ -144,18 +147,17 @@ function log(){
     var logging = process.argv[3];
 
    
-    // Appending the command argument to log.txt
-    fs.appendFile("log.txt", logging + newLine, function(error) {
+        // Appending the command argument to log.txt
+        fs.appendFile("log.txt", logging + newLine, function(error) {
 
-    // log error
-    if (error) {
-        console.log(error);
-    }
-    // Prints message content added if this is no error
-    else {
-        console.log("Content Added!");
-    }
+        // log error
+        if (error) {
+            console.log(error);
+        }
+        // Prints message content added if this is no error
+        else {
+            console.log("Content Added!");
+        }
 
-    });
+        });
     }
-}
