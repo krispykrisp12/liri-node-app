@@ -3,7 +3,7 @@ require("dotenv").config();
 var keys = require("./keys.js");
 var fs = require("fs");
 var request = require("request");
-var twitter = require('twitter');
+var Twitter = require('Twitter');
 var Spotify = require('node-spotify-api');
 // Variable that creates a new line
 const newLine = "\r\n";
@@ -40,8 +40,25 @@ break;
 // -----------------------------------
 function getTweets(){
     var client = new Twitter(keys.twitter);
-  
-}
+
+    var params = {q: 'krispykrisp', count: 20};
+
+    client.get('statuses/user_timeline', params, searchedData);
+   
+    function searchedData(error, data, response) {
+        // Prints out error message
+        if (error) {
+            console.log("error")
+        }else{
+            // Loop through the tweets and printing out created at and the tweets
+            for(i = 0; i < data.length; i++){
+                console.log("============= My Tweets ================"
+                + newLine + "Create at: " + data[i].created_at
+                + newLine + "Tweet: " + data[i].text
+                + newLine + "========================================");      
+            }
+        }
+    }
 // -----------------------------------
 // This function grabs songs from spotify
 function getSong(){
@@ -94,7 +111,7 @@ function getMovie(){
                 + newLine + "Country Produced: " + jsonData.Country
                 + newLine + "Language: " + jsonData.Language
                 + newLine + "Plot: " + jsonData.Plot
-                + newLine + "Actors: " + jsonData.Actors +
+                + newLine + "Actors: " + jsonData.Actors
                 + newLine + "=========================================");
                 log();
         }
@@ -140,4 +157,5 @@ function log(){
     }
 
     });
+    }
 }
