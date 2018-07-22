@@ -92,7 +92,7 @@ function getSongs(){
 // This function grabs movies from OMDB
 function getMovies(){
         // command line request
-        var movieName = process.argv.slice(3);
+        var movieName = process.argv.slice(3).join(" ");
         // getting movie from OMDB API
         var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
 
@@ -144,7 +144,7 @@ function doWhatItSays(){
 // ----------
 function log(){
     // Command line argument store in logging variable
-    var logging = process.argv.slice(3);
+    var logging = process.argv.slice(3).join(" ");
 
    
         // Appending the command argument to log.txt
